@@ -53,7 +53,7 @@ function onLogout() {
       </MenubarMenu>
     </Menubar>
 
-    <Button variant="ghost" size="sm" class="ml-auto" @click="onLogout">
+    <Button size="sm" class="ml-auto" @click="onLogout">
       <LogOut />
       <span>Déconnexion</span>
     </Button>

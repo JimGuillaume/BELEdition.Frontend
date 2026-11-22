@@ -28,7 +28,7 @@ function formatDate(o: Oeuvre) {
       <Card
         v-for="oeuvre in oeuvres"
         :key="oeuvre.id"
-        class="h-full transition-shadow hover:shadow-md"
+        class="hover:ring-primary h-full transition-[box-shadow] hover:shadow-md hover:ring-2"
       >
         <img
           :src="oeuvre.couverturePremiere"

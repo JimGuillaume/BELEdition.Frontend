@@ -61,9 +61,15 @@ const secondary = ref<TreeNode[]>([
   },
 ])
 
+const selectedId = ref<string | null>(null)
+
+// Couleur principale du thème pour l'élément sélectionné
+const activeClass =
+  'data-active:bg-sidebar-primary data-active:text-sidebar-primary-foreground data-active:hover:bg-sidebar-primary/90 data-active:hover:text-sidebar-primary-foreground data-active:[&>svg]:text-sidebar-primary-foreground'
+
 function select(node: TreeNode) {
+  selectedId.value = node.id
   // TODO : naviguer vers l'élément sélectionné
-  console.log('selected', node)
 }
 </script>
 
@@ -98,7 +104,8 @@ function select(node: TreeNode) {
                     <SidebarMenuSubItem v-for="child in node.children" :key="child.id">
                       <SidebarMenuSubButton
                         as="button"
-                        class="w-full"
+                        :class="['w-full', activeClass]"
+                        :is-active="selectedId === child.id"
                         @click="select(child)"
                       >
                         <File />
@@ -109,7 +116,13 @@ function select(node: TreeNode) {
                 </CollapsibleContent>
               </Collapsible>
 
-              <SidebarMenuButton v-else :tooltip="node.label" @click="select(node)">
+              <SidebarMenuButton
+                v-else
+                :tooltip="node.label"
+                :class="activeClass"
+                :is-active="selectedId === node.id"
+                @click="select(node)"
+              >
                 <File />
                 <span>{{ node.label }}</span>
               </SidebarMenuButton>
