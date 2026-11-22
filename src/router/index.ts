@@ -10,6 +10,12 @@ const router = createRouter({
       component: AccueilPage,
       meta: { title: 'Accueil' },
     },
+    {
+      path: '/oeuvres',
+      name: 'oeuvres',
+      component: () => import('@/Pages/oeuvre/OeuvreOverviewPage.vue'),
+      meta: { title: 'Œuvres' },
+    },
   ],
 })
 
