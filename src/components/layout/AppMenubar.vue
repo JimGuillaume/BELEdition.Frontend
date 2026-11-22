@@ -11,7 +11,10 @@ import {
 } from '@/components/ui/menubar'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
-const emit = defineEmits<{ logout: [] }>()
+function onLogout() {
+  // TODO : brancher l'authentification
+  console.log('logout')
+}
 </script>
 
 <template>
@@ -50,7 +53,7 @@ const emit = defineEmits<{ logout: [] }>()
       </MenubarMenu>
     </Menubar>
 
-    <Button variant="ghost" size="sm" class="ml-auto" @click="emit('logout')">
+    <Button variant="ghost" size="sm" class="ml-auto" @click="onLogout">
       <LogOut />
       <span>Déconnexion</span>
     </Button>

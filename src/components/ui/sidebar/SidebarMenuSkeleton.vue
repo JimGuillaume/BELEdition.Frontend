@@ -10,7 +10,7 @@ const props = defineProps<{
   class?: HTMLAttributes['class']
 }>()
 
-// Derive the width from a stable id so server and client render the same value
+// Dérive la largeur d'un id stable pour que le serveur et le client affichent la même valeur
 const id = useId()
 const width = computed(() => {
   let hash = 0

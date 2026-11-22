@@ -24,12 +24,47 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar'
 
-defineProps<{
-  oeuvres: TreeNode[]
-  secondary: TreeNode[]
-}>()
+import { onMounted, ref } from 'vue'
+import { GetOeuvres } from '@/services/oeuvreService'
 
-const emit = defineEmits<{ select: [node: TreeNode] }>()
+// Arbre du haut : chaque œuvre se déplie pour afficher ses éléments.
+// TODO : remplacer les enfants fictifs par les vrais éléments de l'œuvre.
+const oeuvres = ref<TreeNode[]>([])
+
+onMounted(async () => {
+  const list = await GetOeuvres()
+  oeuvres.value = list.map((o) => ({
+    id: o.id,
+    label: o.titre,
+    children: [
+      { id: `${o.id}-1`, label: 'Élément 1' },
+      { id: `${o.id}-2`, label: 'Élément 2' },
+      { id: `${o.id}-3`, label: 'Élément 3' },
+    ],
+  }))
+})
+
+// Second arbre : même structure, contenu à définir.
+const secondary = ref<TreeNode[]>([
+  {
+    id: 'group-1',
+    label: 'Groupe 1',
+    children: [
+      { id: 'group-1-a', label: 'Élément A' },
+      { id: 'group-1-b', label: 'Élément B' },
+    ],
+  },
+  {
+    id: 'group-2',
+    label: 'Groupe 2',
+    children: [{ id: 'group-2-a', label: 'Élément A' }],
+  },
+])
+
+function select(node: TreeNode) {
+  // TODO : naviguer vers l'élément sélectionné
+  console.log('selected', node)
+}
 </script>
 
 <template>
@@ -64,7 +99,7 @@ const emit = defineEmits<{ select: [node: TreeNode] }>()
                       <SidebarMenuSubButton
                         as="button"
                         class="w-full"
-                        @click="emit('select', child)"
+                        @click="select(child)"
                       >
                         <File />
                         <span>{{ child.label }}</span>
@@ -74,7 +109,7 @@ const emit = defineEmits<{ select: [node: TreeNode] }>()
                 </CollapsibleContent>
               </Collapsible>
 
-              <SidebarMenuButton v-else :tooltip="node.label" @click="emit('select', node)">
+              <SidebarMenuButton v-else :tooltip="node.label" @click="select(node)">
                 <File />
                 <span>{{ node.label }}</span>
               </SidebarMenuButton>
