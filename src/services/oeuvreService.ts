@@ -1,18 +1,4 @@
-import { toast } from 'vue-sonner'
-import api from './api'
-import { OeuvreSchema, type Oeuvre } from '@/schemas/oeuvreSchema'
-
-export async function GetOeuvreById(id: string): Promise<Oeuvre> {
-  try {
-    const response = await api.get(`api/oeuvre/${id}`)
-    return OeuvreSchema.parse(response.data)
-  } catch (error) {
-    toast.error("Impossible de charger l'œuvre", {
-      description: 'Veuillez réessayer plus tard.',
-    })
-    throw error
-  }
-}
+import type { Oeuvre } from '@/schemas/oeuvreSchema'
 
 // TODO : remplacer les données fictives par le vrai appel API quand un endpoint « liste des œuvres » existera, ex. :
 //   const response = await api.get('api/oeuvre')

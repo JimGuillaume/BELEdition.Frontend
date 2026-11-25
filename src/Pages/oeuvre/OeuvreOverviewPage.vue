@@ -31,11 +31,18 @@ function formatDate(o: Oeuvre) {
         class="hover:ring-primary h-full transition-[box-shadow] hover:shadow-md hover:ring-2"
       >
         <img
+          v-if="oeuvre.couverturePremiere"
           :src="oeuvre.couverturePremiere"
           :alt="`Couverture de ${oeuvre.titre}`"
           class="aspect-[3/4] w-full object-cover"
           loading="lazy"
         />
+        <div
+          v-else
+          class="bg-muted text-muted-foreground flex aspect-[3/4] w-full items-center justify-center text-sm"
+        >
+          Pas de couverture
+        </div>
         <CardHeader>
           <CardTitle class="line-clamp-1">{{ oeuvre.titre }}</CardTitle>
           <CardDescription>
