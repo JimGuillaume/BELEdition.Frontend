@@ -24,16 +24,18 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar'
 
-import { onMounted, ref } from 'vue'
-import { GetOeuvres } from '@/services/oeuvreService'
+import { computed, onMounted, ref } from 'vue'
+import { useOeuvres } from '@/composables/useOeuvres'
 
 // Arbre du haut : chaque œuvre se déplie pour afficher ses éléments.
+// Liste partagée avec la page d'aperçu : suppressions et modifications s'y reflètent.
 // TODO : remplacer les enfants fictifs par les vrais éléments de l'œuvre.
-const oeuvres = ref<TreeNode[]>([])
+const { oeuvres: oeuvreList, fetchOeuvres } = useOeuvres()
 
-onMounted(async () => {
-  const list = await GetOeuvres()
-  oeuvres.value = list.map((o) => ({
+onMounted(fetchOeuvres)
+
+const oeuvres = computed<TreeNode[]>(() =>
+  oeuvreList.value.map((o) => ({
     id: o.id,
     label: o.titre,
     children: [
@@ -41,8 +43,8 @@ onMounted(async () => {
       { id: `${o.id}-2`, label: 'Élément 2' },
       { id: `${o.id}-3`, label: 'Élément 3' },
     ],
-  }))
-})
+  })),
+)
 
 // Second arbre : même structure, contenu à définir.
 const secondary = ref<TreeNode[]>([

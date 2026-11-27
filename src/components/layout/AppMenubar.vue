@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { LogOut } from '@lucide/vue'
-import { Button } from '@/components/ui/button'
+import { LogOut } from '@lucide/vue';
+import { Button } from '@/components/ui/button';
 import {
   Menubar,
   MenubarContent,
@@ -8,12 +8,12 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from '@/components/ui/menubar'
-import { SidebarTrigger } from '@/components/ui/sidebar'
+} from '@/components/ui/menubar';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 function onLogout() {
   // TODO : brancher l'authentification
-  console.log('logout')
+  console.log('logout');
 }
 </script>
 
@@ -39,7 +39,9 @@ function onLogout() {
             <RouterLink to="/oeuvres">Toutes les œuvres</RouterLink>
           </MenubarItem>
           <MenubarSeparator />
-          <MenubarItem>Nouvelle œuvre</MenubarItem>
+          <MenubarItem as-child>
+            <RouterLink :to="{ name: 'oeuvre-nouvelle' }">Nouvelle œuvre</RouterLink>
+          </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
 
@@ -53,7 +55,7 @@ function onLogout() {
       </MenubarMenu>
     </Menubar>
 
-    <Button size="sm" class="ml-auto" @click="onLogout">
+    <Button variant="secondary" size="sm" class="ml-auto" @click="onLogout">
       <LogOut />
       <span>Déconnexion</span>
     </Button>
